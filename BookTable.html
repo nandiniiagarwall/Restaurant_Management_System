@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Table</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            background-image: url('Donut.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Change height to min-height for better responsiveness */
+            position: relative; /* Make the body position relative */
+        }
+
+        .header {
+            background-color: peru;
+            color: #fff;
+            text-align: left;
+            padding: 10px; /* Increased padding for better visibility */
+            width: 100%; /* Ensure full width */
+            position: absolute; /* Position at the top */
+            top: 0; /* Stick to the top */
+            left: 0; /* Stick to the left */
+        }
+
+        .header img {
+            max-width: 2%;
+            height: auto; /* Automatically adjust height */
+            cursor: pointer;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            
+            width: 80%; /* Reduce width of the container */
+            max-width: 500px; /* Limit maximum width */
+            margin: auto;
+            margin-top: 50px; /* Added margin-top to create space between header and form */
+            position: relative; /* Ensure container stays relative to body */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px; /* Decrease font size */
+        }
+
+        .form-group {
+           
+            margin-bottom: 15px; /* Reduce margin-bottom */
+        }
+
+        label {
+            font-weight: bold;
+            font-family: Comic Sans MS;
+            font-size: 16px; /* Decrease font size */
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%; /* Ensure input fields take full width */
+            padding: 8px; /* Reduce padding */
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .find-table,
+        .confirm-button,
+        .Back {
+            width: 100%; /* Ensure buttons take full width */
+            padding: 10px; /* Adjust padding */
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px; /* Add margin-top for better spacing */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href='Home.html'><img src="homepage.png" alt="Your Image"></a>
+    </div>
+    <div class="form-container">
+        <h2>Book your Table</h2>
+        <form id="bookingForm" action="Book2.jsp" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Id:</label>
+                <input type="text" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="text" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Time:</label>
+                <input type="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label for="partysize">Party Size:</label>
+                <input type="text" name="partysize" required>
+            </div>
+            <center>
+                <button type="button" class="find-table" onclick="fetchAvailableTables()">Find Table</button>
+            </center>
+
+            <div class="confirmation-container" id="confirmationContainer" style="display: none;">
+                <!-- Available tables will be displayed here -->
+            </div>
+
+            <center>
+                <br>
+                <button type="button" class="Back" onclick="goToHomepage()">Back</button>
+            </center>
+        </form>
+    </div>
+    <script>
+        function fetchAvailableTables() {
+            var partySize = document.getElementsByName('partysize')[0].value;
+            // AJAX request to fetch available tables
+            document.getElementById('bookingForm').action = 'Book2.jsp';
+            // Submit the form
+            document.getElementById('bookingForm').submit();
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById('confirmationContainer').innerHTML = xhr.responseText;
+                        document.getElementById('confirmationContainer').style.display = 'block';
+                        // Set the action of the form to confirmBooking.jsp
+                        document.getElementById('bookingForm').action = 'BookConfirmation.jsp';
+                    } else {
+                        console.error('Error fetching available tables');
+                    }
+                }
+            };
+            xhr.open('POST', 'Book2.jsp', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send('partysize=' + encodeURIComponent(partySize));
+        }
+
+        function goToHomepage() {
+            window.location.href = "Home.html";
+        }
+    </script>    
+</body>
+</html>

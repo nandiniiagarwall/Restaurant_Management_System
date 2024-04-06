@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Online</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            background-image: url('n1.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+.header {
+        background-color: peru;
+        color: #fff;
+        text-align: left;
+        padding: 5px;
+    }
+    .header img {
+        max-width:2%;
+        height: 2%;
+        cursor: pointer; 
+    }
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            max-width: none;
+            max-height: 80vh; /* Set maximum height to 80% of the viewport height */
+            overflow-y: auto; /* Enable vertical scrolling if content exceeds the maximum height */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 80%;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #bill {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+        }
+
+        .cancel-btn:hover {
+            background-color: #da190b;
+        }
+
+        #billItems {
+            list-style: none;
+            padding: 0;
+        }
+
+        #billItems li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+    <a href='Home.html'><img src="homepage.png" alt="Your Image"></a>
+</div>
+    <div class="container">
+        <h2>Order Food Online</h2>
+        <p>Click on the menu link to view the menu and select items. Enter the selected items in the order form below.</p>
+
+        <!-- Menu link -->
+        <a href="view_menu.html">Menu</a>
+
+        <!-- Order Form -->
+        <form id="orderForm" action="confirm_order.jsp" method="post">
+            <label for="customerId">Customer ID:</label>
+            <input type="text" id="customerId" name="customerId" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="selectedItems">Selected Items:</label>
+            <div id="selectedItemsContainer">
+                <!-- Individual item selection -->
+            </div>
+
+            <label for="deliveryAddress">Delivery Address:</label>
+            <textarea id="deliveryAddress" name="deliveryAddress" rows="4" required></textarea><br>
+
+            <!-- Bill section -->
+            <div id="bill">
+                <h3>Bill</h3>
+                <ul id="billItems"></ul>
+                <!-- Inside the <form> element -->
+                <input type="hidden" id="totalBill" name="totalBill" value="0.00">
+            </div>
+
+            <br>
+            <center>
+                <button type="submit">Confirm Order</button>
+                <button type="button" class="cancel-btn" onclick="goToHomepage()">Cancel</button>
+            </center>
+        </form>
+
+        <script>
+            // Define items and their prices
+            const itemPrices = {"Item 1": 10.00, "Item 2": 15.00, "Item 3": 20.00};
+
+            // Retrieve selected items from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedItems = urlParams.getAll('menuItems[]');
+
+            // Create input fields for each selected item
+            const selectedItemsContainer = document.getElementById('selectedItemsContainer');
+            selectedItems.forEach(item => {
+                const label = document.createElement('label');
+                label.textContent = ${item} Quantity:;
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.name = quantity_${item};
+                input.min = 1;
+                input.required = true;
+                input.addEventListener('input', updateBill);
+                selectedItemsContainer.appendChild(label);
+                selectedItemsContainer.appendChild(input);
+            });
+
+            // Update the bill based on retrieved items
+            updateBill();
+
+            function updateBill() {
+                var totalAmount = 0;
+
+                // Display each item with its amount
+                var billItemsList = document.getElementById('billItems');
+                billItemsList.innerHTML = "";
+
+                selectedItems.forEach(item => {
+                    const quantityInput = document.querySelector([name="quantity_${item}"]);
+                    const quantity = quantityInput.valueAsNumber || 1;
+                    const itemAmount = itemPrices[item] * quantity;
+                    totalAmount += itemAmount;
+
+                    var listItem = document.createElement('li');
+                    listItem.textContent = ${item} x ${quantity} - $${itemAmount.toFixed(2)};
+                    billItemsList.appendChild(listItem);
+                });
+
+                // Display tax
+                var taxRate = 0.1; // 10% tax rate (you can adjust this)
+                var taxAmount = totalAmount * taxRate;
+                var taxItem = document.createElement('li');
+                taxItem.textContent = Tax (10%): $${taxAmount.toFixed(2)};
+                billItemsList.appendChild(taxItem);
+
+                // Display discount
+                var discountRate = 0.05; // 5% discount (you can adjust this)
+                var discountAmount = totalAmount * discountRate;
+                var discountItem = document.createElement('li');
+                discountItem.textContent = Discount (5%): $${discountAmount.toFixed(2)};
+                billItemsList.appendChild(discountItem);
+
+                // Display total amount
+                var totalAmountItem = document.createElement('li');
+                totalAmountItem.textContent = Total Amount: $${totalAmount.toFixed(2)};
+                billItemsList.appendChild(totalAmountItem);
+
+                // Set the value of the hidden input field
+                document.getElementById('totalBill').value = totalAmount.toFixed(2);
+            }
+
+            function goToHomepage() {
+                window.location.href = "HomePage.html"; // Replace with your homepage URL
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Table</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            background-image: url('ST1.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 500px;
+            max-width: 80%; /* Adjust as needed */
+            margin: auto; /* Center the container */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .find-table {
+            width: 50%;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .find-table:hover {
+            background-color: black;
+        }
+
+        .confirm-button {
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .confirm-button:hover {
+            background-color: #45a049;
+        }
+
+        .Back {
+            width: 50%;
+            padding: 10px 15px;
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .Back:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Book your Table</h2>
+        <form id="bookingForm" action="bookconn.jsp" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" name="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="EmailId">Email Id:</label>
+                <input type="text" name="EmailId" required>
+            </div>
+            <div class="form-group">
+                <label for="Contact">Contact:</label>
+                <input type="text" name="Contact" required>
+            </div>
+            <div class="form-group">
+                <label for="Date">Date:</label>
+                <input type="date" name="Date" required>
+            </div>
+            <div class="form-group">
+                <label for="Time">Time:</label>
+                <input type="time" name="Time" required>
+            </div>
+            <div class="form-group">
+                <label for="PartySize">Party Size:</label>
+                <input type="text" name="PartySize" required>
+            </div>
+            <center>
+                <button type="button" class="find-table" onclick="fetchAvailableTables()">Find Table</button>
+            </center>
+
+            <div class="confirmation-container" id="confirmationContainer" style="display: none;">
+                <!-- Available tables will be displayed here -->
+            </div>
+
+            <center>
+                <button type="button" class="Back" onclick="goToHomepage()">Back</button>
+            </center>
+        </form>
+    </div>
+    <script>
+        function fetchAvailableTables() {
+            var partySize = document.getElementsByName('PartySize')[0].value;
+    // AJAX request to fetch available tables
+            document.getElementById('bookingForm').action = 'bookconn.jsp';
+    // Submit the form
+            document.getElementById('bookingForm').submit();
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                document.getElementById('confirmationContainer').innerHTML = xhr.responseText;
+                document.getElementById('confirmationContainer').style.display = 'block';
+                // Set the action of the form to confirmBooking.jsp
+                document.getElementById('bookingForm').action = 'confirmBooking.jsp';
+            } else {
+                console.error('Error fetching available tables');
+            }
+            }
+            };
+            xhr.open('POST', 'bookconn.jsp', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send('PartySize=' + encodeURIComponent(partySize));
+        }
+
+        function goToHomepage() {
+            window.location.href = "HomePage.html";
+        }
+    </script>    
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            background-image: url('ST1.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+.header {
+        background-color: peru;
+        color: #fff;
+        text-align: left;
+        padding: 5px;
+    }
+    .header img {
+        max-width:2%;
+        height: 2%;
+        cursor: pointer; 
+    }
+        .container {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button.back-btn {
+            background-color: #e74c3c;
+        }
+        #success-message {
+            color: #4caf50;
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hii,</h2>
+        <form id="registrationForm" onsubmit="return false;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+<div class="header">
+    <a href='Home.html'><img src="homepage.png" alt="Your Image"></a>
+</div>
+            <div class="btn-container">
+                <button type="button" id="updateButton" onclick="updateForm()">Update</button>
+                <button type="submit" id="saveButton" style="display: none;">Save</button>
+                <button type="button" class="back-btn" onclick="goToHomepage()">Back</button>
+            </div>
+            <div id="success-message">Profile updated successfully!</div>
+        </form>
+
+        <script>
+            function showSuccessMessage() {
+                document.getElementById('success-message').style.display = 'block';
+            }
+
+            function updateForm() {
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var phone = document.getElementById('phone').value;
+                var address = document.getElementById('address').value;
+
+                if (name && email && phone && address) {
+                    var updateButton = document.getElementById('updateButton');
+                    var saveButton = document.getElementById('saveButton');
+
+                    updateButton.style.display = 'none';
+                    saveButton.style.display = 'block';
+
+                    saveButton.addEventListener('click', function() {
+                        showSuccessMessage();
+                    });
+                } else {
+                    alert('Please fill out all fields.');
+                }
+            }
+            function goToHomepage() {
+                window.location.href = "HomePage.html"; // Replace with your homepage URL
+            }
+        </script>
+    </div>
+</body>
+</html>

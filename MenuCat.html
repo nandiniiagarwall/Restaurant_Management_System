@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .parent_class {
+            background-color: white;
+            background-image: url('Back.webp');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+.header {
+        background-color: peru;
+        color: #fff;
+        text-align: left;
+        padding: 5px;
+    }
+    .header img {
+        max-width:2%;
+        height: 2%;
+        cursor: pointer; 
+    }
+        .colorful-box {
+            width: 380px;
+            height: 270px;
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 18px;
+            border-radius: 30px;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 20pt;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .box1 {
+            background-color: rgba(255, 255, 255, 0.7);
+            background-image: url('Chinese1.webp');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .box2 {
+            background-image: url('Shakes1.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .box3 {
+            background-image: url('menusi.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .box4 {
+            background-image: url('Paneer.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .box5 {
+            background-image: url('Thali1.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .box6 {
+            background-image: url('Dessert.jfif.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+    </style>
+    <title>Menu Categories</title>
+</head>
+
+<body class="parent_class">
+<div class="header">
+    <a href='Home.html'><img src="homepage.png" alt="Your Image"></a>
+</div>
+    <table align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <a href="Starters.jsp">
+                        <form action="try1.jsp" method="post" onsubmit="return validateForm()">
+                            <div class="colorful-box box1">Starters</div>
+                        </form> 
+                    </a>
+                </td>
+                <td>
+                    <a href="Beverages.jsp">
+                        <div class="colorful-box box2">Beverages</div>
+                    </a>
+                </td>
+                <td>
+                    <a href="SouthIndian.jsp">
+                        <div class="colorful-box box3">South Indian</div>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="Vegetables.jsp">
+                        <div class="colorful-box box4">Vegetables</div>
+                    </a>
+                </td>
+                <td>
+                    <a href="Breads.jsp">
+                        <div class="colorful-box box5">Main Course</div>
+                    </a>
+                </td>
+                <td>
+                    <a href="Deserts.jsp">
+                        <div class="colorful-box box6">Dessert</div>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

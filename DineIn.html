@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dine-In</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            background-image: url('n1.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+.header {
+        background-color: peru;
+        color: #fff;
+        text-align: left;
+        padding: 5px;
+    }
+    .header img {
+        max-width:2%;
+        height: 2%;
+        cursor: pointer; 
+    }
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            max-width: none;
+            max-height: 80vh; /* Set maximum height to 80% of the viewport height */
+            overflow-y: auto; /* Enable vertical scrolling if content exceeds the maximum height */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 80%;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+        }
+
+        .cancel-btn:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Dine-In</h2>
+        <p>Click on the menu link to view the menu and select items. Enter the selected items in the order form below.</p>
+
+        <a href="view_menu.html">Menu</a>
+        <!-- Order Form -->
+       <form id="orderForm" action="processOrder.jsp" method="post">
+            <label for="customerId">Customer ID:</label>
+            <input type="text" id="customerId" name="customerId" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="selectedItems">Selected Items:</label>
+            <div id="selectedItemsContainer">
+                <!-- Individual item selection -->
+            </div>
+            <div class="header">
+    <a href='Home.html'><img src="homepage.png" alt="Your Image"></a>
+</div>
+            <label for="tableNo">Table Number:</label>
+            <input type="text" id="tableNo" name="tableNo" required>
+
+            <!-- Payment Option -->
+            <label for="paymentOption">Payment Option:</label>
+            <select id="paymentOption" name="paymentOption" required>
+                <option value="cash">Cash on Dine-In</option>
+                <!-- Add more payment options as needed -->
+            </select><br><br>
+
+            <center>
+                <button type="submit">Confirm Order</button>
+                <button type="button" class="cancel-btn" onclick="goToHomepage()">Cancel</button>
+            </center>
+        </form>
+
+        <script>
+            // Function to redirect to homepage
+            function goToHomepage() {
+                window.location.href = "Home.html";
+            }
+
+            // Initial display of selected items
+            displaySelectedItems();
+
+            // Function to display selected items
+            function displaySelectedItems() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const selectedItems = urlParams.getAll('menuItems[]');
+
+                const selectedItemsContainer = document.getElementById('selectedItemsContainer');
+
+                selectedItems.forEach(item => {
+                    const label = document.createElement('label');
+                    label.textContent = ${item} Quantity:;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.name = quantity_${item};
+                    input.min = 1;
+                    input.required = true;
+                    selectedItemsContainer.appendChild(label);
+                    selectedItemsContainer.appendChild(input);
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>

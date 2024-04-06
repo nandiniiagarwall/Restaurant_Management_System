@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen's Corner</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            background-image: url('restaurant.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .header {
+            background-color: peru;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        .menu-bar {
+            background-color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        .menu-bar a {
+            display: inline-block;
+            color: black;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .menu-bar a:hover {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0; 
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+         .notification {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            background-color: wheat;
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer; 
+        } 
+        .profile-pic {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            
+            background-color: wheat; 
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer; 
+        }
+         .logout-icon {
+        position: absolute;
+        top: 10px;
+        right: 60px; /* Adjusted position */
+        background-color: wheat; /* Adjust color as needed */
+        color: #fff;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer; /* Add cursor style for clickable effect */
+    }       
+        .footer {
+            background-color: peru;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+     <div class="header">
+         <h1>Queen's Corner Restaurant</h1>
+    </div>
+    <div class="logout-icon" onclick="logout()">
+    <img src="logout.png" alt="Logout Icon" style="width: 20px; height: 20px;">
+</div>
+      
+    <div class="menu-bar">
+        <div class="dropdown">
+            <a href="#">Menu</a>
+            <div class="dropdown-content">
+                <a href="Updelins.jsp">Update and Delete</a>
+                <a href="menuinsert.jsp">Insert New Item</a>
+            </div>
+        </div>
+        <a href="man_feedback.jsp">Feedbacks</a>
+        
+       
+       <div class="dropdown">
+            <a href="#">Orders</a>
+            <div class="dropdown-content">
+                <a href="menu_online.jsp" onclick="addNotification('New online order')">Order Online</a>
+                <a href="menu_dine.jsp" onclick="addNotification('New dine-in order')">Dine-In</a>
+            </div>
+        </div>
+        <a href="customerlist.jsp">Customers</a>    
+        <a href="bookingview.jsp">Bookings</a> 
+        <a href="Offers.html">Special Offers</a>
+        <a href="Gallery.html">Gallery</a>
+        <a href="contact.html">Contact Us</a>
+    </div>
+        <div class="footer">
+        &copy; 2024 Queen's Corner Restaurant. All rights reserved.
+    </div>
+    <script>
+        
+       
+        function logout() {
+            // Redirect to the logout page
+            window.location.href = "logout.jsp"; // Replace "logout.jsp" with the actual path to your logout page
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+        var notificationsContainer = document.getElementById("notificationsContainer");
+        if (!event.target.matches('.notification') && notificationsContainer.style.display === "block") {
+            notificationsContainer.style.display = "none";
+        }
+        }
+    </script>
+</body>
+</html>
